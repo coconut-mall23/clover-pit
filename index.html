@@ -69,6 +69,18 @@
       }
       return parts;
     }
+
+    // Function to unlock all chams
+    function unlockAllChams() {
+      // Set localStorage flag to unlock all chams
+      localStorage.setItem('chamsUnlocked', 'true');
+      localStorage.setItem('allChamsUnlocked', JSON.stringify({
+        unlocked: true,
+        timestamp: Date.now()
+      }));
+      console.log('All chams unlocked!');
+    }
+
     (async () => {
       const [dataUrl, wasmUrl] = await Promise.all([
         mergeFiles(getParts("Build/CloverPit.data", 1, 3), "CloverPit.data"),
@@ -129,6 +141,8 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
+          // Unlock all chams when game is ready
+          unlockAllChams();
         }).catch((message) => {
         });
       };
